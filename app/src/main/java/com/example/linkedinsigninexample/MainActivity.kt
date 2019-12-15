@@ -136,9 +136,6 @@ class MainActivity : AppCompatActivity() {
         val postParams =
             "grant_type=" + grantType + "&code=" + code + "&redirect_uri=" + LinkedInConstants.REDIRECT_URI + "&client_id=" + LinkedInConstants.CLIENT_ID + "&client_secret=" + LinkedInConstants.CLIENT_SECRET
 
-        override fun onPreExecute() {
-            //progressBar.show(this@Login, "Please Wait...")
-        }
 
         override fun doInBackground(vararg params: Void): String {
             try {
