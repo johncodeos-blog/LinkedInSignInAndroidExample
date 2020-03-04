@@ -128,7 +128,7 @@ class MainActivity : AppCompatActivity() {
             val postParams =
                 "grant_type=" + grantType + "&code=" + linkedinCode + "&redirect_uri=" + LinkedInConstants.REDIRECT_URI + "&client_id=" + LinkedInConstants.CLIENT_ID + "&client_secret=" + LinkedInConstants.CLIENT_SECRET
             val url = URL(LinkedInConstants.TOKENURL)
-            val httpsURLConnection = url.openConnection() as HttpsURLConnection
+            val httpsURLConnection = withContext(Dispatchers.IO) {url.openConnection() as HttpsURLConnection}
             httpsURLConnection.requestMethod = "POST"
             httpsURLConnection.setRequestProperty(
                 "Content-Type",
@@ -164,7 +164,7 @@ class MainActivity : AppCompatActivity() {
             val tokenURLFull =
                 "https://api.linkedin.com/v2/me?projection=(id,firstName,lastName,profilePicture(displayImage~:playableStreams))&oauth2_access_token=$token"
             val url = URL(tokenURLFull)
-            val httpsURLConnection = url.openConnection() as HttpsURLConnection
+            val httpsURLConnection = withContext(Dispatchers.IO) {url.openConnection() as HttpsURLConnection}
             httpsURLConnection.requestMethod = "GET"
             httpsURLConnection.doInput = true
             httpsURLConnection.doOutput = false
@@ -218,7 +218,7 @@ class MainActivity : AppCompatActivity() {
 
         GlobalScope.launch(Dispatchers.Default) {
             val url = URL(tokenURLFull)
-            val httpsURLConnection = url.openConnection() as HttpsURLConnection
+            val httpsURLConnection = withContext(Dispatchers.IO) {url.openConnection() as HttpsURLConnection}
             httpsURLConnection.requestMethod = "GET"
             httpsURLConnection.doInput = true
             httpsURLConnection.doOutput = false
